@@ -4,13 +4,16 @@ import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import "@fortawesome/fontawesome-free/css/all.css";
-import AuthContextProvider from "./contexts/AuthContext";
+import AuthContextProvider from "./contexts/authContext";
+import LoadingContextProvider from "./contexts/loadingContext";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
     <AuthContextProvider>
-      <App />
+      <LoadingContextProvider>
+        <App />
+      </LoadingContextProvider>
     </AuthContextProvider>
   </React.StrictMode>
 );

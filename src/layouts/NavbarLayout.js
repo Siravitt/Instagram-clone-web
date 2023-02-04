@@ -1,12 +1,14 @@
-import {Link} from "react-router-dom"
-import useCurrentPage from "../hooks/useCurrentPage"
+import { Link } from "react-router-dom";
+import useCurrentPage from "../hooks/useCurrentPage";
 import homeIconActive from "../images/homeIconActive.svg";
 import homeIconUnactive from "../images/homeIconUnactive.svg";
 import searchActive from "../images/searchActive.svg";
 import searchUnactive from "../images/searchUnactive.svg";
+import useAuth from "../hooks/useAuth";
 
 export default function NavbarLayout() {
-  const {current, currentPage} = useCurrentPage()
+  const { current, currentPage } = useCurrentPage();
+  const { userData } = useAuth();
   return (
     <div className="w-[390px] h-[50px] mx-auto sticky bottom-0 bg-white">
       <div className="w-full h-full flex items-center justify-evenly">
@@ -35,9 +37,7 @@ export default function NavbarLayout() {
           )}
         </Link>
         <Link to="/post">
-          <i
-            className="fa-regular fa-square-plus fa-lg"
-          ></i>
+          <i className="fa-regular fa-square-plus fa-lg"></i>
         </Link>
         <Link to="/chat" onClick={() => currentPage(3)}>
           <i
@@ -47,15 +47,16 @@ export default function NavbarLayout() {
           ></i>
         </Link>
         <div className="w-[22px] h-[22px] bg-gray-400 rounded-full">
-          <Link to="/profile"
+          <Link
+            to="/profile"
             className="w-full h-full"
             onClick={() => currentPage(4)}
           >
             <img
-              src="https://images.unsplash.com/photo-1502790671504-542ad42d5189?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1740&q=80"
+              src={userData?.profileImage}
               alt=""
-              className={`object-cover w-full h-full rounded-full ${
-                current === 4 ? "ring" : ""
+              className={`object-cover w-full h-full rounded-full border-2 border-${
+                current === 4 ? "white ring" : "black"
               }`}
             />
           </Link>

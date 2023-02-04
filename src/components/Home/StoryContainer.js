@@ -1,11 +1,14 @@
+import useAuth from "../../hooks/useAuth";
+
 export default function StoryContainer() {
+  const { userData } = useAuth();
   return (
     <div className="w-full h-[85px] gap-2 px-2 flex items-center overflow-x-auto scrollbar-hide">
-      <button className="shrink-0 w-[56px] h-[56px] bg-red-200 rounded-full relative">
+      <button className="shrink-0 w-[56px] h-[56px] bg-gray-400 rounded-full relative">
         <img
-          src="https://images.unsplash.com/photo-1502790671504-542ad42d5189?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1740&q=80"
+          src={userData?.profileImage}
           alt=""
-          className="object-cover w-full h-full rounded-full"
+          className="object-cover w-full h-full rounded-full ring"
         />
         <div className="w-[14px] h-[14px] text-white rounded-full bg-blue-700 absolute bottom-0 right-0 flex items-center">
           <i className="fa-solid fa-plus"></i>
