@@ -4,7 +4,6 @@ export const CurrentPageContext = createContext();
 
 export default function CurrentPageContextProvider({ children }) {
   const location = window.location.pathname
-  console.log(location);
   const pages = () =>{
     if (location === "/") return 1
     else if (location === "/search") return 2

@@ -9,18 +9,28 @@ import ChatPage from "../pages/ChatPage";
 import ProfilePage from "../pages/ProfilePage";
 import EditProfilePage from "../pages/EditProfilePage";
 import NotificationPage from "../pages/NotificationPage";
+import RedirectIfAuthenticate from "../features/auth/RedirectIfAuthenticate";
+import ProtectedRoute from "../features/auth/ProtectedRoute";
 
 const router = createBrowserRouter([
   {
     path: "/login",
-    element: <LoginPage />,
+    element: (
+      <RedirectIfAuthenticate>
+        <LoginPage />,
+      </RedirectIfAuthenticate>
+    ),
   },
   {
     path: "/register",
     element: <RegisterPage />,
   },
   {
-    element: <Layout />,
+    element: (
+      <ProtectedRoute>
+        <Layout />,
+      </ProtectedRoute>
+    ),
     children: [
       {
         path: "/",
@@ -50,7 +60,11 @@ const router = createBrowserRouter([
   },
   {
     path: "/edit-profile",
-    element: <EditProfilePage />,
+    element: (
+      <ProtectedRoute>
+        <EditProfilePage />,
+      </ProtectedRoute>
+    ),
   },
 ]);
 
