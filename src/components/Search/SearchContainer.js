@@ -21,7 +21,8 @@ export default function SearchContainer() {
       setResult([]);
     }
     return () => clearTimeout(time);
-  }, [fetchUser, search]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [search]);
   return (
     <>
       <div className="w-full h-[45px] pt-[20px] flex items-center justify-center">

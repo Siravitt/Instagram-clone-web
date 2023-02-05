@@ -36,8 +36,12 @@ export default function NavbarLayout() {
             />
           )}
         </Link>
-        <Link to="/post">
-          <i className="fa-regular fa-square-plus fa-lg"></i>
+        <Link to="/post" onClick={() => currentPage(5)}>
+          <i
+            className={`fa-${
+              current === 5 ? "solid" : "regular"
+            } fa-square-plus fa-lg`}
+          ></i>
         </Link>
         <Link to="/chat" onClick={() => currentPage(3)}>
           <i

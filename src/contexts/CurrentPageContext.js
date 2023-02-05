@@ -9,6 +9,7 @@ export default function CurrentPageContextProvider({ children }) {
     else if (location === "/search") return 2
     else if (location === "/chat") return 3
     else if (location === "/profile") return 4
+    else if (location === "/post") return 5
   }
   const [current, setCurrent] = useState(pages);
   const currentPage = (page) => setCurrent(page);

@@ -2,7 +2,7 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import ProfileName from "./ProfileName";
 import ProfileData from "./ProfileData";
-import ProfilePhoto from "./ProfilePhoto";
+import ProfilePhotoContainer from "./ProfilePhotoContainer";
 
 export default function ProfileContainer() {
   const navigate = useNavigate();
@@ -38,7 +38,7 @@ export default function ProfileContainer() {
           <i className="fa-solid fa-circle-user fa-xl"></i>
         </button>
       </div>
-      <ProfilePhoto />
+      <ProfilePhotoContainer />
     </>
   );
 }

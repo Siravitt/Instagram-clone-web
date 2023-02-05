@@ -87,7 +87,7 @@ export default function EditProfileForm() {
         <div className="w-full h-[50px] flex items-center text-[14px]">
           <div className="pr-10">Username</div>
           <input
-            className="w-full h-full flex items-center border-b focus:border-none"
+            className="w-full h-full flex items-center border-b focus:outline-none"
             placeholder={userData?.userName}
             onChange={(e) => setUserName(e.target.value)}
           ></input>
@@ -95,7 +95,7 @@ export default function EditProfileForm() {
         <div className="w-full h-[50px] flex items-center text-[14px]">
           <div className="pr-[85.5px]">Bio</div>
           <input
-            className="w-full h-full flex items-center border-b focus:border-none"
+            className="w-full h-full flex items-center border-b focus:outline-none"
             placeholder="Bio"
           ></input>
         </div>
