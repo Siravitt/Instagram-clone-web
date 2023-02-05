@@ -11,6 +11,8 @@ import EditProfilePage from "../pages/EditProfilePage";
 import NotificationPage from "../pages/NotificationPage";
 import RedirectIfAuthenticate from "../features/auth/RedirectIfAuthenticate";
 import ProtectedRoute from "../features/auth/ProtectedRoute";
+import UserPage from "../pages/UserPage";
+import UserContextProvider from "../contexts/userContext";
 
 const router = createBrowserRouter([
   {
@@ -23,7 +25,11 @@ const router = createBrowserRouter([
   },
   {
     path: "/register",
-    element: <RegisterPage />,
+    element: (
+      <RedirectIfAuthenticate>
+        <RegisterPage />,
+      </RedirectIfAuthenticate>
+    ),
   },
   {
     element: (
@@ -38,7 +44,11 @@ const router = createBrowserRouter([
       },
       {
         path: "/search",
-        element: <SearchPage />,
+        element: (
+          <UserContextProvider>
+            <SearchPage />,
+          </UserContextProvider>
+        ),
       },
       {
         path: "/post",
@@ -55,6 +65,14 @@ const router = createBrowserRouter([
       {
         path: "/notification",
         element: <NotificationPage />,
+      },
+      {
+        path: "/user/:id",
+        element: (
+          <UserContextProvider>
+            <UserPage />,
+          </UserContextProvider>
+        ),
       },
     ],
   },
