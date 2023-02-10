@@ -1,12 +1,7 @@
-export default function UserPhoto() {
-    return (
-      <div className="w-full h-auto flex flex-wrap gap-[1.5px] overflow-y-auto scrollbar-hide">
-        <button className="w-[129px] h-[129px] bg-gray-400"></button>
-        <button className="w-[129px] h-[129px] bg-gray-400"></button>
-        <button className="w-[129px] h-[129px] bg-gray-400"></button>
-        <button className="w-[129px] h-[129px] bg-gray-400"></button>
-        <button className="w-[129px] h-[129px] bg-gray-400"></button>
-      </div>
-    );
-  }
-  
+export default function UserPhoto({ title, image }) {
+  return (
+      <button className="w-[129px] h-[129px] bg-gray-400">
+        <img src={image} alt="" className="w-[129px] h-[129px] object-cover" />
+      </button>
+  );
+}

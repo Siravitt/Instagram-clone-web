@@ -1,29 +1,67 @@
-export default function Post() {
+import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+import useAuth from "../../hooks/useAuth";
+import { createLike, getAllLike, unLike } from "../../apis/post-api";
+import socket from "../../configs/socket";
+import PostAction from "./PostAction";
+import PostName from "./PostName";
+import PostCaption from "./PostCaption"
+
+export default function Post({ id, title, image, user }) {
+  const [like, setLike] = useState([]);
+  const { userData } = useAuth();
+
+  useEffect(() => {
+    const fetchLike = async () => {
+      const res = await getAllLike(id);
+      setLike(res.data.allLike);
+    };
+
+    fetchLike();
+  }, [id, userData?.id]);
+
+  const onLike = async () => {
+    try {
+      const newLike = structuredClone(like);
+      newLike.push("new like");
+      await createLike({ postId: id });
+      setLike(newLike);
+      socket.emit("send_like", {
+        to: user.id,
+        from: userData?.userName,
+        postId: id,
+      });
+    } catch (err) {
+      console.log(err.response?.data);
+    }
+  };
+
+  const onUnLike = async () => {
+    try {
+      const newLike = structuredClone(like);
+      newLike.pop();
+      await unLike(id);
+      setLike(newLike);
+    } catch (err) {
+      console.log(err.response?.data);
+    }
+  };
+
+  const isLike = like.filter(
+    (el) => el.userId === userData?.id || el === "new like"
+  );
+
   return (
     <div className="w-full h-full">
-      <div className="h-[50px] flex items-center gap-2">
-        <img
-          src="https://media.istockphoto.com/id/1300845620/vector/user-icon-flat-isolated-on-white-background-user-symbol-vector-illustration.jpg?s=612x612&w=0&k=20&c=yBeyba0hUkh14_jgv1OKqIH0CCSWU_4ckRkAoy2p73o="
-          alt=""
-          className="w-[30px] h-[30px] object-cover inline-block rounded-full ml-2"
-        />
-        <div className="inline-block font-bold text-sm">flame</div>
+      <div className="flex flex-col gap-4">
+        <PostName friend={user} />
+        <img src={image} alt="" className="w-full h-[400px] object-cover" />
       </div>
-      <img
-        src="https://plus.unsplash.com/premium_photo-1667734613410-aebe970c3f60?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8bWluaW1hbCUyMHdhbGxwYXBlcnxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=800&q=60"
-        alt=""
-        className="w-full h-[300px] object-cover"
-      />
       <div className="w-full h-[40px] flex gap-3 pl-2">
-        <button>
-          <i className="fa-regular fa-heart fa-lg"></i>
-        </button>
-        <button>
-          <i className="fa-regular fa-comment fa-lg"></i>
-        </button>
+        <PostAction isLike={isLike} onLike={onLike} onUnLike={onUnLike} />
       </div>
       <div className="w-full h-[18px] flex items-center">
-        <div className="flex ml-2">
+        {/* <div className="flex ml-2">
           <img
             src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1740&q=80"
             alt=""
@@ -39,20 +77,20 @@ export default function Post() {
             alt=""
             className="object-cover rounded-full ring-[2px] ring-white w-[10px] h-[10px]"
           />
-        </div>
+        </div> */}
         <div className="flex gap-1 ml-2">
-          <div className="text-[10px]">Liked by</div>
+          <Link to={`/${id}/like`} className="text-[12px] font-bold">
+            {like?.length} Like
+          </Link>
+          {/* <div className="text-[10px]">Liked by</div>
           <div className="text-[10px] font-bold">siravit</div>
           <div className="text-[10px]">and</div>
-          <div className="text-[10px] font-bold">147 others</div>
+          <div className="text-[10px] font-bold">147 others</div> */}
         </div>
       </div>
-      <div className="ml-2 flex gap-2 mt-1">
-        <div className="text-[12px] font-bold">flame</div>
-        <div className="text-[12px]">lorem ipsum.</div>
-      </div>
+      <PostCaption title={title} name={user?.userName}/>
       <div className="ml-2">
-        <div className="text-[12px] text-gray-400">View all comment</div>
+        <button className="text-[12px] text-gray-400">View all comments</button>
       </div>
     </div>
   );

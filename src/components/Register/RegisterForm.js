@@ -113,7 +113,7 @@ export default function RegisterForm() {
             />
           </div>
           <div className="w-[268px] h-[32px] flex justify-center">
-            <button className="w-full h-full mt-4 bg-blue-400 rounded-lg text-white font-bold">
+            <button className="w-full h-full mt-4 bg-blue-400 rounded-lg text-white font-bold hover:bg-blue-600 duration-200">
               Register
             </button>
           </div>

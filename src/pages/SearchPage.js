@@ -1,9 +1,14 @@
 import SearchContainer from "../components/Search/SearchContainer";
+import { motion } from "framer-motion";
 
 export default function SearchPage() {
   return (
-    <div className="w-[390px] h-[845px] mx-auto bg-white overflow-y-auto">
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      className="w-[390px] h-[845px] mx-auto bg-white overflow-y-auto"
+    >
       <SearchContainer />
-    </div>
+    </motion.div>
   );
 }

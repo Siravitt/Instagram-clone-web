@@ -4,7 +4,7 @@ import LoginPage from "../pages/LoginPage";
 import RegisterPage from "../pages/RegisterPage";
 import HomePage from "../pages/HomePage";
 import SearchPage from "../pages/SearchPage";
-import PostPage from "../pages/PostPage";
+import CreatePostPage from "../pages//CreatePostPage";
 import ChatPage from "../pages/ChatPage";
 import ProfilePage from "../pages/ProfilePage";
 import EditProfilePage from "../pages/EditProfilePage";
@@ -12,14 +12,15 @@ import NotificationPage from "../pages/NotificationPage";
 import RedirectIfAuthenticate from "../features/auth/RedirectIfAuthenticate";
 import ProtectedRoute from "../features/auth/ProtectedRoute";
 import UserPage from "../pages/UserPage";
-import UserContextProvider from "../contexts/userContext";
+import LikePage from "../pages/LikePage";
+import PostPage from "../pages/PostPage";
 
 const router = createBrowserRouter([
   {
     path: "/login",
     element: (
       <RedirectIfAuthenticate>
-        <LoginPage />,
+        <LoginPage />
       </RedirectIfAuthenticate>
     ),
   },
@@ -27,14 +28,14 @@ const router = createBrowserRouter([
     path: "/register",
     element: (
       <RedirectIfAuthenticate>
-        <RegisterPage />,
+        <RegisterPage />
       </RedirectIfAuthenticate>
     ),
   },
   {
     element: (
       <ProtectedRoute>
-          <Layout />,
+        <Layout />
       </ProtectedRoute>
     ),
     children: [
@@ -44,14 +45,14 @@ const router = createBrowserRouter([
       },
       {
         path: "/search",
-        element: (
-          <UserContextProvider>
-            <SearchPage />,
-          </UserContextProvider>
-        ),
+        element: <SearchPage />,
       },
       {
         path: "/post",
+        element: <CreatePostPage />,
+      },
+      {
+        path: "/post/:userId/:postId",
         element: <PostPage />,
       },
       {
@@ -68,21 +69,17 @@ const router = createBrowserRouter([
       },
       {
         path: "/user/:id",
-        element: (
-          <UserContextProvider>
-            <UserPage />,
-          </UserContextProvider>
-        ),
+        element: <UserPage />,
+      },
+      {
+        path: "/edit-profile",
+        element: <EditProfilePage />,
+      },
+      {
+        path: "/:postId/like",
+        element: <LikePage />,
       },
     ],
-  },
-  {
-    path: "/edit-profile",
-    element: (
-      <ProtectedRoute>
-        <EditProfilePage />,
-      </ProtectedRoute>
-    ),
   },
 ]);
 

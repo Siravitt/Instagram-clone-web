@@ -1,10 +1,15 @@
-import { Link } from "react-router-dom"
+import { Link } from "react-router-dom";
 import StoryContainer from "../components/Home/StoryContainer";
 import PostContainer from "../components/Post/PostContainer";
+import { motion } from "framer-motion";
 
 export default function HomePage() {
   return (
-    <div className="w-[390px] h-screen mx-auto bg-white overflow-y-auto scrollbar-hide">
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      className="w-[390px] h-screen mx-auto bg-white overflow-y-auto scrollbar-hide pb-[50px]"
+    >
       <div className="w-full h-[60px] sticky top-0 flex items-center justify-between bg-white z-50">
         <div className="w-[105px] h-[30px] ml-2">
           <img
@@ -19,6 +24,6 @@ export default function HomePage() {
       <div className="border"></div>
       <StoryContainer />
       <PostContainer />
-    </div>
+    </motion.div>
   );
 }

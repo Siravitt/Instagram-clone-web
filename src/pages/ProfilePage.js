@@ -1,9 +1,15 @@
 import ProfileContainer from "../components/Profile/ProfileContainer";
+import { motion } from "framer-motion";
 
 export default function ProfilePage() {
+
   return (
-    <div className="w-[390px] h-screen mx-auto bg-white flex flex-col">
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      className="w-[390px] h-fit min-h-screen mx-auto bg-white flex flex-col pb-[50px]"
+    >
       <ProfileContainer />
-    </div>
+    </motion.div>
   );
 }

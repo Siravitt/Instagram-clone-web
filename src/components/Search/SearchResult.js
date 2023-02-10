@@ -6,10 +6,10 @@ export default function SearchResult({ userName, profileImage, id }) {
       to={`/user/${id}`}
       className="w-full h-[45px] flex items-center gap-4"
     >
-      <div className="w-[45px] h-[45px] rounded-full bg-gray-400">
+      <div className="w-[45px] h-[45px] rounded-full bg-white">
         <img
           className="w-[45px] h-[45px] rounded-full object-cover"
-          src={profileImage}
+          src={profileImage || process.env.REACT_APP_BLANK_USER}
           alt=""
         />
       </div>

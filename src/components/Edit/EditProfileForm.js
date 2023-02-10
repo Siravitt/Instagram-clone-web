@@ -4,9 +4,11 @@ import { toast } from "react-toastify";
 import useLoading from "../../hooks/useLoading";
 import { editProfile } from "../../apis/edit-api";
 import useAuth from "../../hooks/useAuth";
+import { motion } from "framer-motion";
 
 export default function EditProfileForm() {
   const [userName, setUserName] = useState("");
+  const [bio, setBio] = useState("");
   const [profileImage, setProfileImage] = useState(null);
   const { startLoading, stopLoading } = useLoading();
   const navigate = useNavigate();
@@ -16,11 +18,14 @@ export default function EditProfileForm() {
     try {
       e.preventDefault();
       const formData = new FormData();
-      if (!userName && !profileImage) {
-        toast.error("Username or profile image is required");
+      if (!userName && !profileImage && !bio) {
+        toast.error("Username or profile image or bio is required");
       }
       if (userName) {
         formData.append("userName", userName);
+      }
+      if (bio) {
+        formData.append("bio", bio);
       }
       if (profileImage) {
         formData.append("profileImage", profileImage);
@@ -31,6 +36,7 @@ export default function EditProfileForm() {
         toast.error("Cannot edit profile");
       }
       setUserName("");
+      setBio("");
       setProfileImage(null);
       toast.success("Complete edit");
       navigate("/profile", { state: { prevPath: "/edit-profile" } });
@@ -43,14 +49,16 @@ export default function EditProfileForm() {
   };
 
   return (
-    <form
+    <motion.form
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
       className="w-[390px] h-screen mx-auto bg-white"
       onSubmit={hldSubmitForm}
     >
       <div className="w-full h-[45px] flex items-center justify-between px-2 text-[14px] border-b">
         <Link to="/profile">Cancel</Link>
         <div className="font-bold">Edit profile</div>
-        <button className="font-bold text-blue-600">Done</button>
+        <button className="font-bold text-blue-600 hover:text-blue-400 duration-200">Done</button>
       </div>
       <div className="w-full h-[150px] flex flex-col items-center gap-4 py-4 border-b">
         <div className="shrink-0 w-[80px] h-[80px] bg-gray-400 rounded-full">
@@ -77,7 +85,7 @@ export default function EditProfileForm() {
         ></input>
         <button
           type="button"
-          className="text-[12px] font-bold text-blue-600"
+          className="text-[12px] font-bold text-blue-600 hover:text-blue-400 duration-200"
           onClick={() => document.getElementById("selectedFile").click()}
         >
           Edit picture
@@ -96,10 +104,11 @@ export default function EditProfileForm() {
           <div className="pr-[85.5px]">Bio</div>
           <input
             className="w-full h-full flex items-center border-b focus:outline-none"
-            placeholder="Bio"
+            placeholder={userData?.bio || "Bio"}
+            onChange={(e) => setBio(e.target.value)}
           ></input>
         </div>
       </div>
-    </form>
+    </motion.form>
   );
 }
