@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { getIsFollow, onFollow, onUnFollow } from "../../apis/user-api";
+import { getIsFollow, onFollow, onUnFollow } from "../../apis/follow-api";
 import socket from "../../configs/socket";
 import useAuth from "../../hooks/useAuth";
 
@@ -36,7 +36,10 @@ export default function LikeList({ name, image, id }) {
           className="w-[50px] h-[50px] rounded-full object-cover"
         />
       </div>
-      <Link to={`/user/${id}`} className="text-[12px] font-bold">
+      <Link
+        to={id === userData?.id ? "/profile" : `/user/${id}`}
+        className="text-[12px] font-bold"
+      >
         {name}
       </Link>
       {id === userData?.id ? null : (
@@ -49,7 +52,10 @@ export default function LikeList({ name, image, id }) {
               Follow
             </button>
           ) : (
-            <button onClick={hldClickUnFollow} className="w-[100px] h-[25px] rounded-lg text-[12px] font-bold bg-gray-200 hover:bg-gray-400 duration-200">
+            <button
+              onClick={hldClickUnFollow}
+              className="w-[100px] h-[25px] rounded-lg text-[12px] font-bold bg-gray-200 hover:bg-gray-400 duration-200"
+            >
               Following
             </button>
           )}

@@ -6,13 +6,11 @@ import {
   removeSearchResult,
   setAccessToken,
 } from "../utils/local-storage";
-import { getAllPost } from "../apis/post-api";
 
 export const AuthContext = createContext();
 
 export default function AuthContextProvider({ children }) {
   const [userData, setUserData] = useState(null);
-  const [posts, setPosts] = useState([]);
   const [authenticatedUser, setAuthenticatedUser] = useState(
     getAccessToken() ? true : null
   );
@@ -20,18 +18,12 @@ export default function AuthContextProvider({ children }) {
   useEffect(() => {
     if (authenticatedUser) {
       fetchAuthUser();
-      fetchPost();
     }
   }, [authenticatedUser]);
 
   const fetchAuthUser = async () => {
     const res = await authApi.getMe();
     setUserData(res.data.user);
-  };
-
-  const fetchPost = async () => {
-    const res = await getAllPost();
-    setPosts(res.data.allPosts);
   };
 
   const login = async (input) => {
@@ -48,7 +40,7 @@ export default function AuthContextProvider({ children }) {
 
   return (
     <AuthContext.Provider
-      value={{ authenticatedUser, login, logout, userData, posts, fetchPost }}
+      value={{ authenticatedUser, login, logout, userData }}
     >
       {children}
     </AuthContext.Provider>

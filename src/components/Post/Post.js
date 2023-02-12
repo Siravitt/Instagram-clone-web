@@ -1,36 +1,31 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import useAuth from "../../hooks/useAuth";
-import { createLike, getAllLike, unLike } from "../../apis/post-api";
+import { createLike, deleteLike } from "../../apis/like-api";
 import socket from "../../configs/socket";
 import PostAction from "./PostAction";
 import PostName from "./PostName";
-import PostCaption from "./PostCaption"
+import PostCaption from "./PostCaption";
 
-export default function Post({ id, title, image, user }) {
+export default function Post({ id, title, image, user, likes }) {
   const [like, setLike] = useState([]);
   const { userData } = useAuth();
 
   useEffect(() => {
-    const fetchLike = async () => {
-      const res = await getAllLike(id);
-      setLike(res.data.allLike);
-    };
-
-    fetchLike();
-  }, [id, userData?.id]);
+    setLike(likes);
+  }, [likes]);
 
   const onLike = async () => {
     try {
       const newLike = structuredClone(like);
       newLike.push("new like");
       await createLike({ postId: id });
-      setLike(newLike);
       socket.emit("send_like", {
         to: user.id,
         from: userData?.userName,
         postId: id,
       });
+      setLike(newLike)
     } catch (err) {
       console.log(err.response?.data);
     }
@@ -40,14 +35,14 @@ export default function Post({ id, title, image, user }) {
     try {
       const newLike = structuredClone(like);
       newLike.pop();
-      await unLike(id);
-      setLike(newLike);
+      await deleteLike(id);
+      setLike(newLike)
     } catch (err) {
       console.log(err.response?.data);
     }
   };
 
-  const isLike = like.filter(
+  const isLike = like?.filter(
     (el) => el.userId === userData?.id || el === "new like"
   );
 
@@ -88,7 +83,7 @@ export default function Post({ id, title, image, user }) {
           <div className="text-[10px] font-bold">147 others</div> */}
         </div>
       </div>
-      <PostCaption title={title} name={user?.userName}/>
+      <PostCaption title={title} name={user?.userName} />
       <div className="ml-2">
         <button className="text-[12px] text-gray-400">View all comments</button>
       </div>

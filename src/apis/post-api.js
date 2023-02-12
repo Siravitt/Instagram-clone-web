@@ -1,7 +1,6 @@
 import axios from "../configs/axios";
 
-export const postImage = (input) => axios.post("/post/post-image", input);
-export const getAllPost = () => axios.get("/post/get-post");
-export const getAllLike = (postId) => axios.get(`/post/like/${postId}`);
-export const createLike = (postId) => axios.post("/post/create-like", postId);
-export const unLike = (postId) => axios.delete(`/post/unLike/${postId}`);
+export const createImage = (input) => axios.post("/post/post-image", input);
+export const getAllPost = () => axios.get("/post/get-all-post");
+export const getProfilePost = () => axios.get("/post/get-profile-post");
+export const getPostById = (postId) => axios.get(`/post/get-post-id/${postId}`);

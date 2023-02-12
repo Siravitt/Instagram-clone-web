@@ -6,7 +6,8 @@ import UserAction from "./UserAction";
 import UserName from "./UserName";
 import UserData from "./UserData";
 import UserPhoto from "./UserPhoto";
-import { getUserData, onFollow, onUnFollow } from "../../apis/user-api";
+import { getUserData } from "../../apis/user-api";
+import { onFollow, onUnFollow } from "../../apis/follow-api";
 import { searchById } from "../../apis/search-api";
 import socket from "../../configs/socket";
 import useAuth from "../../hooks/useAuth";
@@ -14,13 +15,13 @@ import useAuth from "../../hooks/useAuth";
 export default function UserContainer() {
   const { id } = useParams();
   const { userData } = useAuth();
+  const navigate = useNavigate();
+  const [userDetail, setUserDetail] = useState([]);
   const [userProfile, setUserProfile] = useState({
     posts: [],
     following: [],
     follower: [],
   });
-  const [userDetail, setUserDetail] = useState([]);
-  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -82,7 +83,7 @@ export default function UserContainer() {
       />
       <div className="w-full flex flex-wrap gap-[1.5px]">
         {userProfile.posts?.map((el) => (
-          <UserPhoto key={el.id} title={el.title} image={el.image} />
+          <UserPhoto key={el.id} userId={el.userId} postId={el.id} image={el.image} />
         ))}
       </div>
     </motion.div>

@@ -4,14 +4,16 @@ import ProfileName from "./ProfileName";
 import ProfileData from "./ProfileData";
 import ProfilePhotoContainer from "./ProfilePhotoContainer";
 import useAuth from "../../hooks/useAuth";
+import { getProfilePost } from "../../apis/post-api";
 
 export default function ProfileContainer() {
   const navigate = useNavigate();
   const location = useLocation();
-  const { logout, userData, posts } = useAuth();
+  const { logout, userData } = useAuth();
   const [menu, setMenu] = useState(false);
-  const showMenu = () => setMenu(true);
+  const [posts, setPosts] = useState([]);
 
+  const showMenu = () => setMenu(true);
   const photos = posts.filter((el) => el.userId === userData?.id);
 
   useEffect(() => {
@@ -22,6 +24,14 @@ export default function ProfileContainer() {
       };
     }
   });
+
+  useEffect(() => {
+    const fetchPost = async () => {
+      const res = await getProfilePost();
+      setPosts(res.data.posts);
+    };
+    fetchPost();
+  }, []);
 
   return (
     <>

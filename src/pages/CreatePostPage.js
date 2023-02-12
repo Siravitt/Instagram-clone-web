@@ -1,15 +1,14 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { motion } from "framer-motion";
 import { toast } from "react-toastify";
 import useLoading from "../hooks/useLoading";
-import { postImage } from "../apis/post-api";
-import useAuth from "../hooks/useAuth";
+import { createImage } from "../apis/post-api";
 
 export default function CreatePostPage() {
   const [title, setTitle] = useState("");
   const [image, setImage] = useState(null);
   const { startLoading, stopLoading } = useLoading();
-  const { fetchPost } = useAuth();
   const navigate = useNavigate();
 
   const hldSubmitForm = async (e) => {
@@ -24,11 +23,10 @@ export default function CreatePostPage() {
       }
       formData.append("image", image);
       startLoading();
-      await postImage(formData);
+      await createImage(formData);
       setTitle("");
       setImage(null);
       toast.success("Complete post");
-      fetchPost();
       navigate("/");
     } catch (err) {
       console.log(err);
@@ -39,7 +37,11 @@ export default function CreatePostPage() {
   };
 
   return (
-    <div className="w-[390px] h-screen mx-auto bg-white">
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      className="w-[390px] h-screen mx-auto bg-white"
+    >
       <form onSubmit={hldSubmitForm}>
         <div className="w-full h-[45px] flex items-center justify-between px-4 border-b">
           <Link to="/">
@@ -92,6 +94,6 @@ export default function CreatePostPage() {
           </div>
         </div>
       </form>
-    </div>
+    </motion.div>
   );
 }

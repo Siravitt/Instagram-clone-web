@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { getIsFollow } from "../../apis/user-api";
+import { getIsFollow } from "../../apis/follow-api";
 
 export default function UserAction({ userProfile, ifFollow, ifUnFollow }) {
   const { id } = useParams();
