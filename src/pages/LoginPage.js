@@ -15,7 +15,12 @@ export default function LoginPage() {
         <LoginForm />
         <div className="signup text-[12px] mt-20">
           <span>Don't have an account? </span>
-          <button className="text-blue-600 font-bold" onClick={() => navigate('/register')}>Sign up</button>
+          <button
+            className="text-blue-600 font-bold"
+            onClick={() => navigate("/register")}
+          >
+            Sign up
+          </button>
         </div>
         <div className="mt-10 flex flex-col items-center gap-6">
           <div className="text-sm">Get the app.</div>

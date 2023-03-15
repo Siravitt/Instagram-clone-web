@@ -61,17 +61,12 @@ export default function ProfileContainer() {
       </div>
       <ProfilePhotoContainer photos={photos} />
       {menu && (
-        <div
-          className="relative z-50 w-[390px] h-auto "
-          aria-labelledby="modal-title"
-          role="dialog"
-          aria-modal="true"
-        >
+        <div className="relative z-50 w-[390px] h-auto">
           <div
             className="w-[390px] h-screen mx-auto fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity"
             onClick={() => setMenu(false)}
           ></div>
-          <div className="w-[390px] h-[300px] fixed fadein bottom-0 transform overflow-hidden rounded-t-lg bg-white text-left shadow-xl transition-all">
+          <div className="w-[390px] h-[300px] fixed fadein bottom-0 overflow-hidden rounded-t-lg bg-white text-left shadow-xl">
             <div className="w-full h-[45px] mt-[25px]">
               <div className="w-full h-full">
                 <button className="w-full h-full flex items-center gap-6">

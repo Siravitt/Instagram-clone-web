@@ -75,7 +75,7 @@ export default function UserContainer() {
       className="w-[390px] h-fit min-h-screen mx-auto bg-white flex flex-col pb-[50px]"
     >
       <UserName name={userDetail.userName} />
-      <UserData image={userDetail.profileImage} userProfile={userProfile} />
+      <UserData image={userDetail.profileImage} userProfile={userProfile} id={id} />
       <UserAction
         userProfile={userProfile}
         ifFollow={ifFollow}

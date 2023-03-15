@@ -14,6 +14,9 @@ import ProtectedRoute from "../features/auth/ProtectedRoute";
 import UserPage from "../pages/UserPage";
 import LikePage from "../pages/LikePage";
 import PostPage from "../pages/PostPage";
+import CommentPage from "../pages/CommentPage";
+import FollowPage from "../pages/FollowPage";
+import OnChatPage from "../pages/OnChatPage";
 
 const router = createBrowserRouter([
   {
@@ -56,6 +59,10 @@ const router = createBrowserRouter([
         element: <PostPage />,
       },
       {
+        path: "/comment/:postId",
+        element: <CommentPage />,
+      },
+      {
         path: "/chat",
         element: <ChatPage />,
       },
@@ -78,6 +85,14 @@ const router = createBrowserRouter([
       {
         path: "/:postId/like",
         element: <LikePage />,
+      },
+      {
+        path: "/follow/:userId",
+        element: <FollowPage />,
+      },
+      {
+        path: "/chat/:userId",
+        element: <OnChatPage />,
       },
     ],
   },

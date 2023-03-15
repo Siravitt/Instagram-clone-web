@@ -10,11 +10,15 @@ export default function OnePostContainer() {
 
   useEffect(() => {
     const fetchOnePost = async () => {
-      const res = await getPostById(postId);
-      setPost(res.data.post);
+      try {
+        const res = await getPostById(postId);
+        setPost(res.data.post);
+      } catch (err) {
+        navigate("/");
+      }
     };
     fetchOnePost();
-  }, [postId]);
+  }, [navigate, postId]);
 
   return (
     <>

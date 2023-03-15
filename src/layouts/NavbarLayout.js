@@ -1,17 +1,17 @@
 import { Link, useLocation } from "react-router-dom";
-import homeIconActive from "../images/homeIconActive.svg";
-import homeIconUnactive from "../images/homeIconUnactive.svg";
-import searchActive from "../images/searchActive.svg";
-import searchUnactive from "../images/searchUnactive.svg";
+// import homeIconActive from "../images/homeIconActive.svg";
+// import homeIconUnactive from "../images/homeIconUnactive.svg";
+// import searchActive from "../images/searchActive.svg";
+// import searchUnactive from "../images/searchUnactive.svg";
 import useAuth from "../hooks/useAuth";
 
 export default function NavbarLayout() {
   const { userData } = useAuth();
   const location = useLocation();
   return (
-    <div className="w-[390px] h-[50px] mx-auto fixed -translate-x-1/2 left-1/2 bottom-0 bg-white">
+    <div className="w-[390px] h-[50px] mx-auto fixed -translate-x-1/2 left-1/2 bottom-0 bg-white border-t">
       <div className="w-full h-full flex items-center justify-evenly">
-        <Link to="/" className="w-[25px] h-[25px]">
+        {/* <Link to="/" className="w-[25px] h-[25px]">
           {location.pathname === "/" ? (
             <img src={homeIconActive} alt="homeIcon" className="object-cover" />
           ) : (
@@ -21,8 +21,8 @@ export default function NavbarLayout() {
               className="object-cover"
             />
           )}
-        </Link>
-        <Link to="/search" className="w-[25px] h-[25px]">
+        </Link> */}
+        {/* <Link to="/search" className="w-[25px] h-[25px]">
           {location.pathname === "/search" ? (
             <img src={searchActive} alt="searchIcon" className="object-cover" />
           ) : (
@@ -32,7 +32,7 @@ export default function NavbarLayout() {
               className="object-cover"
             />
           )}
-        </Link>
+        </Link> */}
         <Link to="/post">
           <i
             className={`fa-${

@@ -1,15 +1,20 @@
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+import socket from "../../configs/socket";
 import useAuth from "../../hooks/useAuth";
 import { createLike, deleteLike } from "../../apis/like-api";
-import socket from "../../configs/socket";
 import PostAction from "./PostAction";
 import PostName from "./PostName";
 import PostCaption from "./PostCaption";
+import { deletePost } from "../../apis/post-api";
 
 export default function Post({ id, title, image, user, likes }) {
   const [like, setLike] = useState([]);
+  const [menu, setMenu] = useState(false);
   const { userData } = useAuth();
+  const navigate = useNavigate();
+  const location = useLocation();
 
   useEffect(() => {
     setLike(likes);
@@ -25,7 +30,7 @@ export default function Post({ id, title, image, user, likes }) {
         from: userData?.userName,
         postId: id,
       });
-      setLike(newLike)
+      setLike(newLike);
     } catch (err) {
       console.log(err.response?.data);
     }
@@ -36,7 +41,7 @@ export default function Post({ id, title, image, user, likes }) {
       const newLike = structuredClone(like);
       newLike.pop();
       await deleteLike(id);
-      setLike(newLike)
+      setLike(newLike);
     } catch (err) {
       console.log(err.response?.data);
     }
@@ -46,10 +51,26 @@ export default function Post({ id, title, image, user, likes }) {
     (el) => el.userId === userData?.id || el === "new like"
   );
 
+  const onDeletePost = async () => {
+    try {
+      await deletePost(userData?.id, id);
+      if (location.pathname === "/") {
+        navigate(0)
+      } else {
+        navigate("/");
+      }
+    } catch (err) {
+      console.log(err.data?.response);
+      toast.error("Cannot Delete");
+    }
+  };
+
+  const openMenu = () => setMenu(true);
+
   return (
     <div className="w-full h-full">
       <div className="flex flex-col gap-4">
-        <PostName friend={user} />
+        <PostName friend={user} openMenu={openMenu} />
         <img src={image} alt="" className="w-full h-[400px] object-cover" />
       </div>
       <div className="w-full h-[40px] flex gap-3 pl-2">
@@ -85,8 +106,54 @@ export default function Post({ id, title, image, user, likes }) {
       </div>
       <PostCaption title={title} name={user?.userName} />
       <div className="ml-2">
-        <button className="text-[12px] text-gray-400">View all comments</button>
+        <Link to={`/comment/${id}`} className="text-[12px] text-gray-400">View all comments</Link>
       </div>
+      {menu ? (
+        <>
+          <div
+            className="w-[390px] h-screen mx-auto fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity"
+            onClick={() => setMenu(false)}
+          ></div>
+          <div className="w-[390px] h-[300px] fixed fadein bottom-0 transform overflow-hidden rounded-t-lg bg-white text-left shadow-xl transition-all">
+            <div className="w-full h-[45px] mt-[25px]">
+              <div className="w-full h-full">
+                <button className="w-full h-full flex items-center gap-6">
+                  <div className="pl-8">
+                  <i className="fa-regular fa-star fa-lg"></i>
+                  </div>
+                  <div className="w-full h-full border-b text-[14px] flex items-center">
+                    Add to favorite
+                  </div>
+                </button>
+              </div>
+              <div className="w-full h-full">
+                {userData?.id === user.id ? (
+                  <button
+                    onClick={onDeletePost}
+                    className="w-full h-full flex items-center gap-6 text-red-500"
+                  >
+                    <div className="pl-8">
+                      <i className="fa-solid fa-trash-can fa-lg w-[20px]"></i>
+                    </div>
+                    <div className="w-full h-full border-b text-[14px] font-bold flex items-center">
+                      Delete
+                    </div>
+                  </button>
+                ) : (
+                  <button className="w-full h-full flex items-center gap-6 text-red-500">
+                    <div className="pl-8">
+                      <i className="fa-solid fa-triangle-exclamation fa-lg"></i>
+                    </div>
+                    <div className="w-full h-full border-b text-[14px] font-bold flex items-center">
+                      Report
+                    </div>
+                  </button>
+                )}
+              </div>
+            </div>
+          </div>
+        </>
+      ) : null}
     </div>
   );
 }

@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import useAuth from "../../hooks/useAuth";
 
-export default function PostName({ friend }) {
+export default function PostName({ friend, openMenu }) {
   const { userData } = useAuth();
   return (
     <div className="flex items-center justify-between">
@@ -16,7 +16,7 @@ export default function PostName({ friend }) {
         />
         <div className="inline-block font-bold text-[12px]">{friend?.userName || "Instaguay user"}</div>
       </Link>
-      <button className="pr-4">
+      <button className="pr-4" onClick={openMenu}>
         <i className="fa-solid fa-ellipsis"></i>
       </button>
     </div>

@@ -1,4 +1,6 @@
-export default function UserData({ image, userProfile }) {
+import { Link } from "react-router-dom";
+
+export default function UserData({ image, userProfile, id }) {
   return (
     <>
       <div className="w-[390px] h-[100px] flex items-center px-6 gap-8">
@@ -14,20 +16,28 @@ export default function UserData({ image, userProfile }) {
             <div className="font-bold">{userProfile.posts?.length}</div>
             <div>Posts</div>
           </div>
-          <div className="flex flex-col items-center text-[12px]">
+          <Link
+            to={`/follow/${id}`}
+            className="flex flex-col items-center text-[12px]"
+          >
             <div className="font-bold">
-              {userProfile.follower?.length === 0 ? "0" : userProfile.follower?.length}
+              {userProfile.follower?.length === 0
+                ? "0"
+                : userProfile.follower?.length}
             </div>
             <div>Followers</div>
-          </div>
-          <div className="flex flex-col items-center text-[12px]">
+          </Link>
+          <Link
+            to={`/follow/${id}`}
+            className="flex flex-col items-center text-[12px]"
+          >
             <div className="font-bold">
               {userProfile.following?.length === 0
                 ? "0"
                 : userProfile.following?.length}
             </div>
             <div>Following</div>
-          </div>
+          </Link>
         </div>
       </div>
       <div className="w-full h-auto"></div>

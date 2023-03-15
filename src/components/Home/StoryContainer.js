@@ -10,8 +10,8 @@ export default function StoryContainer() {
           alt=""
           className="object-cover w-full h-full rounded-full ring"
         />
-        <div className="w-[14px] h-[14px] text-white rounded-full bg-blue-700 absolute bottom-0 right-0 flex items-center">
-          <i className="fa-solid fa-plus"></i>
+        <div className="w-[14px] h-[14px] text-white rounded-full bg-blue-700 absolute bottom-0 right-0 flex items-center justify-center">
+          <i className="fa-solid fa-plus text-[12px] font-bold"></i>
         </div>
       </button>
       {/* <div className="shrink-0 w-[56px] h-[56px] bg-gray-200 rounded-full"></div>
